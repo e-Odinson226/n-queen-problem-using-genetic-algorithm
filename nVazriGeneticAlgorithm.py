@@ -74,14 +74,14 @@ def print_chromosome(chrom):
 if __name__ == "__main__":
     n_vazir = int(input("Tedad Vazir: "))                   # N V = 6
     n_population = int(input("Jamiat har generation: "))    # N Population = 20
-    mutation_probability = int(input("Mutation Probability: "))    # Mutation Probability = 1.05
+    mutation_probability = float(input("Mutation Probability (n<1 ==> 0.03): "))    # Mutation Probability = 0.05
     maxFitness = (n_vazir*(n_vazir-1))/2                    # maxFitness = 6*5/2 = 15
     population = [random_chromosome(n_vazir) for _ in range(n_population)]
     
     generation = 1
     while not maxFitness in [fitness(chrom) for chrom in population]:
         print("|=== Generation {} ===|".format(generation))
-        population = genetic_vazir(population, fitness)
+        population = genetic_vazir(population, fitness, mutation_probability)
         print("")
         print("Maximum Fitness = {}".format(max([fitness(n) for n in population])))
         generation += 1
@@ -110,3 +110,5 @@ if __name__ == "__main__":
             
     print()
     print_board(board)
+    print()
+    print("Forked from {https://github.com/waqqasiq/n-queen-problem-using-genetic-algorithm}")    
