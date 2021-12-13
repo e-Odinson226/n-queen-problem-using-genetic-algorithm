@@ -1,10 +1,10 @@
 import random
 
 def random_chromosome(size): #making random chromosomes 
-    return [ random.randint(1, nq) for _ in range(nq) ]
+    return [ random.randint(1, n_vazir) for _ in range(n_vazir) ]
 
 def fitness(chromosome):
-    horizontal_collisions = sum([chromosome.count(queen)-1 for queen in chromosome])/2
+    horizontal_collisions = sum([chromosome.count(vazir)-1 for vazir in chromosome])/2
     diagonal_collisions = 0
 
     n = len(chromosome)
@@ -51,8 +51,8 @@ def mutate(x):  #randomly changing the value of a random index of a chromosome
     x[c] = m
     return x
 
-def genetic_queen(population, fitness):
-    mutation_probability = 0.03
+def genetic_vazir(population, fitness, m_p):
+    mutation_probability = m_p
     new_population = []
     probabilities = [probability(n, fitness) for n in population]
     for i in range(len(population)):
@@ -61,6 +61,7 @@ def genetic_queen(population, fitness):
         child = reproduce(x, y) #creating two new chromosomes from the best 2 chromosomes
         if random.random() < mutation_probability:
             child = mutate(child)
+        print('i:{}'.format(i+1), end="\t")
         print_chromosome(child)
         new_population.append(child)
         if fitness(child) == maxFitness: break
@@ -71,18 +72,20 @@ def print_chromosome(chrom):
         .format(str(chrom), fitness(chrom)))
 
 if __name__ == "__main__":
-    nq = int(input("Enter Number of Queens: ")) #say N = 8
-    maxFitness = (nq*(nq-1))/2  # 8*7/2 = 28
-    population = [random_chromosome(nq) for _ in range(100)]
+    n_vazir = int(input("Tedad Vazir: "))                   # N V = 6
+    n_population = int(input("Jamiat har generation: "))    # N Population = 20
+    mutation_probability = int(input("Mutation Probability: "))    # Mutation Probability = 1.05
+    maxFitness = (n_vazir*(n_vazir-1))/2                    # maxFitness = 6*5/2 = 15
+    population = [random_chromosome(n_vazir) for _ in range(n_population)]
     
     generation = 1
-
     while not maxFitness in [fitness(chrom) for chrom in population]:
-        print("=== Generation {} ===".format(generation))
-        population = genetic_queen(population, fitness)
+        print("|=== Generation {} ===|".format(generation))
+        population = genetic_vazir(population, fitness)
         print("")
         print("Maximum Fitness = {}".format(max([fitness(n) for n in population])))
         generation += 1
+        print("|=====|=====|=====|=====|=====|=====|=====|=====|=====|=====|")
     chrom_out = []
     print("Solved in Generation {}!".format(generation-1))
     for chrom in population:
@@ -94,11 +97,11 @@ if __name__ == "__main__":
             
     board = []
 
-    for x in range(nq):
-        board.append(["x"] * nq)
+    for x in range(n_vazir):
+        board.append(["x"] * n_vazir)
         
-    for i in range(nq):
-        board[nq-chrom_out[i]][i]="Q"
+    for i in range(n_vazir):
+        board[n_vazir-chrom_out[i]][i]="V"
             
 
     def print_board(board):
@@ -107,8 +110,3 @@ if __name__ == "__main__":
             
     print()
     print_board(board)
-            
-           
-            
-    
-
